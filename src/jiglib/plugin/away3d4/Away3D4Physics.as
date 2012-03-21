@@ -1,11 +1,11 @@
 package jiglib.plugin.away3d4 {
 	
+	import away3d.primitives.SphereGeometry;
+	import away3d.primitives.CubeGeometry;
+	import away3d.primitives.PlaneGeometry;
 	import away3d.containers.View3D;
 	import away3d.entities.Mesh;
 	import away3d.materials.MaterialBase;
-	import away3d.primitives.Cube;
-	import away3d.primitives.Plane;
-	import away3d.primitives.Sphere;
 	
 	import flash.display.BitmapData;
 	import flash.geom.Matrix3D;
@@ -38,11 +38,14 @@ package jiglib.plugin.away3d4 {
 		}
 		
 		public function createGround(material:MaterialBase,width:int=500,height:int=500, segmentsW:uint = 1, segmentsH:uint = 1, yUp:Boolean = true,level:Number = 0):RigidBody {
-			var ground:Plane = new Plane(material, width, height, segmentsW, segmentsH, yUp);
+			var groundGeometry:PlaneGeometry = new PlaneGeometry(width,height,segmentsW,segmentsH,yUp);
+			var groundMesh:Mesh = new Mesh();
+			groundMesh.geometry = groundGeometry;
+			groundMesh.material = material;
 
-			view.scene.addChild(ground);
+			view.scene.addChild(groundMesh);
 			
-			var jGround:JPlane = new JPlane(new Away3D4Mesh(ground),new Vector3D(0, 1, 0));
+			var jGround:JPlane = new JPlane(new Away3D4Mesh(groundMesh),new Vector3D(0, 1, 0));
 			jGround.y = level;
 			jGround.movable = false;
 			addBody(jGround);
@@ -51,19 +54,26 @@ package jiglib.plugin.away3d4 {
 		
 		public function createCube(material:MaterialBase,width:Number=500,height:Number=500,depth:Number=500,segmentsW:uint = 1, segmentsH:uint = 1, segmentsD:uint = 1, tile6:Boolean = true):RigidBody
 		{
-			var cube:Cube = new Cube(material, width, height, depth, segmentsW, segmentsH, segmentsD, tile6);
-			view.scene.addChild(cube);
+			var cubeGeometry:CubeGeometry = new CubeGeometry(width,height,depth,segmentsW,segmentsH,segmentsD,tile6);
+			var cubeMesh:Mesh = new Mesh();
+			cubeMesh.geometry = cubeGeometry;
+			cubeMesh.material = material;
+			view.scene.addChild(cubeMesh);
 			
-			var jBox:JBox = new JBox(new Away3D4Mesh(cube), width, depth, height);
+			var jBox:JBox = new JBox(new Away3D4Mesh(cubeMesh), width, depth, height);
 			addBody(jBox);
 			return jBox;
 		}
 		
 		public function createSphere(material:MaterialBase, radius:Number = 50, segmentsW:uint = 16, segmentsH:uint = 12, yUp:Boolean = true):RigidBody 
 		{
-			var sphere:Sphere = new Sphere(material, radius, segmentsW, segmentsH, yUp);
-			view.scene.addChild(sphere);
-			var jsphere:JSphere = new JSphere(new Away3D4Mesh(sphere), radius);
+			var sphereGeometry:SphereGeometry = new SphereGeometry(radius,segmentsW,segmentsH,yUp);
+			var sphereMesh:Mesh = new Mesh();
+			sphereMesh.geometry = sphereGeometry;
+			sphereMesh.material = material;
+			view.scene.addChild(sphereMesh);
+
+			var jsphere:JSphere = new JSphere(new Away3D4Mesh(sphereMesh), radius);
 			addBody(jsphere);
 			return jsphere;
 		}
