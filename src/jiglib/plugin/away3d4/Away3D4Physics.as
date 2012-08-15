@@ -39,9 +39,7 @@ package jiglib.plugin.away3d4 {
 		
 		public function createGround(material:MaterialBase,width:int=500,height:int=500, segmentsW:uint = 1, segmentsH:uint = 1, yUp:Boolean = true,level:Number = 0):RigidBody {
 			var groundGeometry:PlaneGeometry = new PlaneGeometry(width,height,segmentsW,segmentsH,yUp);
-			var groundMesh:Mesh = new Mesh();
-			groundMesh.geometry = groundGeometry;
-			groundMesh.material = material;
+			var groundMesh:Mesh = new Mesh(groundGeometry, material);
 
 			view.scene.addChild(groundMesh);
 			
@@ -55,9 +53,7 @@ package jiglib.plugin.away3d4 {
 		public function createCube(material:MaterialBase,width:Number=500,height:Number=500,depth:Number=500,segmentsW:uint = 1, segmentsH:uint = 1, segmentsD:uint = 1, tile6:Boolean = true):RigidBody
 		{
 			var cubeGeometry:CubeGeometry = new CubeGeometry(width,height,depth,segmentsW,segmentsH,segmentsD,tile6);
-			var cubeMesh:Mesh = new Mesh();
-			cubeMesh.geometry = cubeGeometry;
-			cubeMesh.material = material;
+			var cubeMesh:Mesh = new Mesh(cubeGeometry, material);
 			view.scene.addChild(cubeMesh);
 			
 			var jBox:JBox = new JBox(new Away3D4Mesh(cubeMesh), width, depth, height);
@@ -68,9 +64,7 @@ package jiglib.plugin.away3d4 {
 		public function createSphere(material:MaterialBase, radius:Number = 50, segmentsW:uint = 16, segmentsH:uint = 12, yUp:Boolean = true):RigidBody 
 		{
 			var sphereGeometry:SphereGeometry = new SphereGeometry(radius,segmentsW,segmentsH,yUp);
-			var sphereMesh:Mesh = new Mesh();
-			sphereMesh.geometry = sphereGeometry;
-			sphereMesh.material = material;
+			var sphereMesh:Mesh = new Mesh(sphereGeometry, material);
 			view.scene.addChild(sphereMesh);
 
 			var jsphere:JSphere = new JSphere(new Away3D4Mesh(sphereMesh), radius);
